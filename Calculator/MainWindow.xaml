@@ -1,0 +1,498 @@
+﻿<Window x:Class="Calculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Calculator"        
+        mc:Ignorable="d"
+        
+        Title="Калькулятор"  
+        MinHeight="539" 
+        MinWidth="358" 
+        Height="440" 
+        Width="0" 
+        WindowStartupLocation="CenterScreen" 
+        WindowStyle="None"
+        AllowsTransparency="true"
+        
+        >
+
+
+    <Window.Template>
+        <ControlTemplate TargetType="Window">
+            <Border
+                Background="{TemplateBinding Background}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                BorderBrush="{TemplateBinding BorderBrush}"         
+                
+                >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border 
+                        Grid.Row="0" 
+                        Background="Black"
+                        MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
+                        >
+                        <Grid>
+                            <!--<Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition MinWidth="30"/>
+                            </Grid.ColumnDefinitions>-->
+
+                            <TextBlock Grid.Column="0" Text="Калькулятор"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,5"                               
+                               >
+                                
+                                
+                            </TextBlock>
+
+                            <Button          
+                                BorderThickness="0"
+                                Foreground="White"
+                                HorizontalAlignment="Right"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                MinWidth="20"
+                                Click="Close"                                
+                                >
+                                
+                                
+                                <Button.Content>
+                                    <TextBlock
+                                    FontSize="20"                                       
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"                                    
+                                    Text="+"                                    
+                                    >
+
+                                        <TextBlock.LayoutTransform>
+                                            <RotateTransform Angle="45"/>
+                                        </TextBlock.LayoutTransform>
+                                    </TextBlock>
+                                </Button.Content>
+
+                                <Button.Style>
+                                    <Style>
+                                        <Setter Property="Control.Background" Value="Blue"/>
+                                    </Style>
+                                </Button.Style>
+
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border
+                                            Background="{TemplateBinding Background}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"                                           
+                                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                            
+                                            >
+                                            <ContentPresenter>
+
+                                            </ContentPresenter>
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter Property="Background">
+                                                    <Setter.Value>
+                                                        <SolidColorBrush Color="#FF17FF00"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+
+                                    </ControlTemplate>
+                                </Button.Template>
+
+
+                            </Button>
+
+                        </Grid>
+
+                    </Border>
+
+                    <Border Grid.Row="1">
+                        <AdornerDecorator>
+                            <ContentPresenter>
+
+                            </ContentPresenter>
+                        </AdornerDecorator>
+
+                    </Border>
+
+                </Grid>
+
+            </Border>
+
+
+        </ControlTemplate>
+    </Window.Template>
+
+    <Window.Resources>
+
+        <!--Стиль для БОЛЬШИХ кнопок-->
+        <Style x:Key="styleBtnBig" TargetType="Button">
+
+            <!--Размер шрифта-->
+            <Setter Property="Control.FontSize" Value="48"/>
+
+            <!--Толщина рамки-->
+            <Setter Property="Control.BorderThickness" Value="2"/>
+
+            <!--Цвет рамки-->
+            <Setter Property="Control.BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                        <GradientStop Color="#FF0051FF" Offset="0.1"/>
+                        <GradientStop Color="#FFB41A1A" Offset="0.9"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+
+            <!--Градиент-->
+            <Setter Property="Control.Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#7FFF6800" Offset="0"/>
+                        <GradientStop Color="#7FB9D600" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+
+            <!--Шаблон для изменения цвета при наведении мыши-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="10"
+                                >
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                            </ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#66FF0000"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Стиль для квадратных кнопок (Цифр)-->
+        <Style x:Key="styleBtn" TargetType="Button">
+
+            <!--Размер шрифта-->
+            <Setter Property="Control.FontSize" Value="48"/>
+
+            <!--Привязываем ф-цию для клика-->
+            <EventSetter Event="Click" Handler="NumberButton_Click"/>
+
+            <!--Толщина рамки-->
+            <Setter Property="Control.BorderThickness" Value="2"/>
+
+            <!--Цвет рамки-->
+            <Setter Property="Control.BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                        <GradientStop Color="#FF0051FF" Offset="0.1"/>
+                        <GradientStop Color="#FFB41A1A" Offset="0.9"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+
+            <!--Поворот-->
+            <Setter Property="Control.LayoutTransform">
+                <Setter.Value>
+                    <RotateTransform Angle="45"/>
+                </Setter.Value>
+            </Setter>
+
+            <!--Градиент-->
+            <Setter Property="Control.Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#7FFF6800" Offset="0"/>
+                        <GradientStop Color="#7FB9D600" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+
+            <!--Шаблон для изменения цвета при наведении мыши-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="10"
+                                >
+                            <ContentPresenter>
+
+                            </ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#66FF0000"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Стиль для квадратных кнопок (Специальных) без оброботки собитий-->
+        <Style x:Key="styleBtnSpecial" TargetType="Button">
+
+            <!--Размер шрифта-->
+            <Setter Property="Control.FontSize" Value="48"/>
+
+            <!--Толщина рамки-->
+            <Setter Property="Control.BorderThickness" Value="2"/>
+
+            <!--Цвет рамки-->
+            <Setter Property="Control.BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                        <GradientStop Color="#FF0051FF" Offset="0.1"/>
+                        <GradientStop Color="#FFB41A1A" Offset="0.9"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+
+            <!--Поворот-->
+            <Setter Property="Control.LayoutTransform">
+                <Setter.Value>
+                    <RotateTransform Angle="45"/>
+                </Setter.Value>
+            </Setter>
+
+            <!--Градиент-->
+            <Setter Property="Control.Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#7FFF6800" Offset="0"/>
+                        <GradientStop Color="#7FB9D600" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+
+            <!--Шаблон для изменения цвета при наведении мыши-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="10"
+                                >
+                            <ContentPresenter>
+
+                            </ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#66FF0000"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--стиль для TextBlock внутри квадратных кнопок -->
+        <Style x:Key="styleTextBlockInBtn">
+            <Setter Property="TextBlock.LayoutTransform">
+                <Setter.Value>
+                    <RotateTransform Angle="-45"/>
+                </Setter.Value>
+            </Setter>
+
+            <!--Выравнивание текста по центру-->
+            <Setter Property="TextBlock.HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
+
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.25*" />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FFFBFB71" Offset="0.9"/>
+                <GradientStop Color="#4CD34A8E" Offset="0.1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid Grid.Row="1" Margin="5">
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Style="{StaticResource styleBtnBig}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Click="NumberButton_Click">
+                <Button.Content >
+                    <TextBlock Text="0"/>
+                    <!--Style="{StaticResource styleTextBlockInBtn}"-->
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="3" Grid.Column="0">
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="1"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="3" Grid.Column="1" >
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="2"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="3" Grid.Column="2">
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="3"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="2" Grid.Column="0">
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="4"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="2" Grid.Column="1" >
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="5"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="2" Grid.Column="2">
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="6"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="1" Grid.Column="0">
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="7"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="1" Grid.Column="1">
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="8"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="1" Grid.Column="2">
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="9"/>
+                </Button.Content>
+            </Button>
+
+
+            <Button Style="{StaticResource styleBtnSpecial}" Grid.Row="4" Grid.Column="3" Click="ResultButton_Click">
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="="/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}"  Grid.Row="3" Grid.Column="3" >
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="+"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="2" Grid.Column="3">
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="-"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="1" Grid.Column="3" >
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="*"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}"  Grid.Row="0" Grid.Column="3" >
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="/"/>
+                </Button.Content>
+            </Button>
+            <Button Style="{StaticResource styleBtn}" Grid.Row="4" Grid.Column="0">
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text=","/>
+                </Button.Content>
+            </Button>
+            <!--<Button Style="{StaticResource styleBtn}" Grid.Row="4" Grid.Column="2">
+                <Button.Content>
+                    <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="()"/>
+                </Button.Content>
+            </Button>-->
+            <Button Style="{StaticResource styleBtnBig}" FontSize="28" FontWeight="Bold" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Click="BackspaceButton_Click">
+                <Button.Content>
+                    <TextBlock Text="Backspace"/>
+                </Button.Content>
+            </Button>
+            <Button  Style="{StaticResource styleBtnSpecial}" FontSize="28" FontWeight="Bold" Grid.Row="0" Grid.Column="0" Click="CE_Button_Click">
+                <TextBlock Style="{StaticResource styleTextBlockInBtn}" Text="CE">
+
+                </TextBlock>
+            </Button>          
+        </Grid>
+
+        <Border Margin="5" CornerRadius="20">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#FF0051FF" Offset="0.1"/>
+                    <GradientStop Color="#FFB41A1A" Offset="0.9"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+
+            <Border.BorderThickness>
+                2
+            </Border.BorderThickness>
+
+            <TextBox x:Name="textBox1" BorderThickness="0" FontSize="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Grid.Row="0" Text="" IsReadOnly="True" >
+                <TextBox.Background>
+                    <SolidColorBrush Color="#0001FFFF"/>
+                </TextBox.Background>
+
+
+            </TextBox>
+        </Border>
+
+
+    </Grid>
+</Window>
